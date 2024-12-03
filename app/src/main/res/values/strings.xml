@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Cuestionarios</string>
+    <string name="question">¿Cuál es el comportamiento por defecto de las clases en Kotlin?</string>
+    <string name="answer1">Todas las clases son privadas</string>
+    <string name="answer2">Todas las clases son selladas</string>
+    <string name="answer3">Todas las clases son finales</string>
+    <string name="answer4">Todas las clases son protegidas</string>
+    <string name="comprobar">Comprobar</string>
+    <string name="limpiar">Limpiar</string>
+    <string name="okMensaje">Respuesta correcta</string>
+    <string name="errorMensaje">Respuesta incorrecta</string>
+    <string name="next">Siguiente</string>
+    <string name="noQuestion">-</string>
+    <string name="formatoEnunciado"> %d - %s</string>
+    <string name="txtNext">Siguiente</string>
+</resources>
