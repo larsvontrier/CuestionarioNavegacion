@@ -32,6 +32,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(savedInstanceState!=null){
+            iActual = savedInstanceState.getInt(INDICE)
+        }
+
         enableEdgeToEdge()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -65,6 +69,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         updatePregunta()
+        Log.d("onCreate", "onCreate")
 
     }
 
@@ -72,14 +77,16 @@ class MainActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
         outState.putInt(INDICE, iActual)
         Log.d("Indice Salvado", "$iActual")
+        Log.d("onSaveInstanceState", "onSaveInstanceState")
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        iActual = savedInstanceState.getInt(INDICE)
-        Log.d("Indice Restaurado", "$iActual")
-        updatePregunta()
-    }
+//    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+//        super.onRestoreInstanceState(savedInstanceState)
+//        iActual = savedInstanceState.getInt(INDICE)
+//        Log.d("Indice Restaurado", "$iActual")
+//        updatePregunta() // Se precisa actualizar, porque onCreate se llama antes que onRestoreInstanceState
+//        Log.d("onRestoreInstanceState", "onRestoreInstanceState")
+//    }
 
     /**
      * Actualiza la pregunta actual en la vista
