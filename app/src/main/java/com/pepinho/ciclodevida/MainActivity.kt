@@ -71,11 +71,14 @@ class MainActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt(INDICE, iActual)
+        Log.d("Indice Salvado", "$iActual")
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         iActual = savedInstanceState.getInt(INDICE)
+        Log.d("Indice Restaurado", "$iActual")
+        updatePregunta()
     }
 
     /**
