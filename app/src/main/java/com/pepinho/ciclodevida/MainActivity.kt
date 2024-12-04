@@ -26,6 +26,10 @@ class MainActivity : AppCompatActivity() {
 
     private var iActual: Int = 0
 
+    companion object{
+        const val INDICE = "indiceActual"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -62,6 +66,16 @@ class MainActivity : AppCompatActivity() {
 
         updatePregunta()
 
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(INDICE, iActual)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        iActual = savedInstanceState.getInt(INDICE)
     }
 
     /**
