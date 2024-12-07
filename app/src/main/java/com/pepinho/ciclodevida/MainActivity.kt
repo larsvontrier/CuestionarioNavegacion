@@ -1,7 +1,9 @@
 package com.pepinho.ciclodevida
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -10,35 +12,40 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 import androidx.core.view.isVisible
+import com.pepinho.ciclodevida.ResultadosActivity.Companion.INTENTOS_KEY
 import com.pepinho.ciclodevida.databinding.ActivityMainBinding
+import com.pepinho.ciclodevida.model.Resultado
 import com.pepinho.ciclodevida.repositorio.PreguntaRepository
-import com.pepinho.pmdm.cuestionarios.model.Pregunta
+import com.pepinho.ciclodevida.repositorio.ResultadosRepository
 import com.pepinho.pmdm.cuestionarios.model.PreguntaTest
 import com.pepinho.pmdm.cuestionarios.model.PreguntaVerdaderoFalso
 
 class MainActivity : AppCompatActivity() {
 
-//    private lateinit var radioButtons: List<RadioButton>
-
     private lateinit var binding: ActivityMainBinding
 
     private val preguntasRepository = PreguntaRepository
+    private val resultadosRepository = ResultadosRepository
+    private var numeroIntentos: Int = 0
 
     private var iActual: Int = 0
 
-    companion object{
+    companion object {
         const val INDICE = "indiceActual"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if(savedInstanceState!=null){
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        if (savedInstanceState != null) {
             iActual = savedInstanceState.getInt(INDICE)
         }
 
         enableEdgeToEdge()
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        numeroIntentos = intent.getIntExtra(INTENTOS_KEY, 0)
+        binding.tvIntentos.text = getString(R.string.numero_intentos, numeroIntentos)
+
         setContentView(binding.root)
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
@@ -64,8 +71,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnNext.setOnClickListener {
+            // Avanzamos a la siguiente pregunta
             iActual++
             updatePregunta()
+        }
+
+        binding.btEnviar.setOnClickListener {
+            val intent = Intent(this, ResultadosActivity::class.java)
+            intent.putExtra(ResultadosActivity.INTENTOS_KEY, numeroIntentos)
+            startActivity(intent)
         }
 
         updatePregunta()
@@ -96,8 +110,10 @@ class MainActivity : AppCompatActivity() {
         val pregunta = preguntasRepository.getPreguntaByIndex(iActual) ?: return
 
         Log.d("Pregunta", pregunta.toString())
-        binding.tvPregunta.text = String.format(getString(R.string.formatoEnunciado), iActual+1,
-            pregunta.enunciado)
+        binding.tvPregunta.text = String.format(
+            getString(R.string.formatoEnunciado), iActual + 1,
+            pregunta.enunciado
+        )
 
         when (pregunta) {
             is PreguntaTest -> {
@@ -115,7 +131,15 @@ class MainActivity : AppCompatActivity() {
 
         Log.d("Índice Actual", "$iActual")
 
-        binding.btnNext.isVisible = !preguntasRepository.isLastQuestionIndex(iActual)
+//        binding.btnNext.isVisible = !preguntasRepository.isLastQuestionIndex(iActual)
+        if (preguntasRepository.isLastQuestionIndex(iActual)) {
+            binding.btnNext.isVisible = false
+            binding.btEnviar.visibility = View.VISIBLE
+        } else {
+            binding.btnNext.isVisible = true
+            binding.btEnviar.visibility = View.GONE
+        }
+
 
     }
 
@@ -123,23 +147,18 @@ class MainActivity : AppCompatActivity() {
      * Si visible es true, se mostrarán los botones de radio 3 y 4, si no, se ocultarán.
      */
     private fun updateRadioButtons(textos: Array<String>, visible: Boolean) {
-        binding.rbOpcion1.apply {
-            text = textos[0]
-            isChecked = false // El estado del botón se conserva por lo que hay que desmarcarlo
-        }
-        binding.rbOpcion2.apply {
-            text = textos[1]
-            isChecked = false
-        }
+
+        binding.rgOpciones.clearCheck()
+
+        binding.rbOpcion1.text = textos[0]
+        binding.rbOpcion2.text = textos[1]
         binding.rbOpcion3.apply {
-            if (textos.size > 2) text = textos[2]
+            text = textos.getOrNull(2) ?: ""
             isVisible = visible
-            isChecked = false
         }
         binding.rbOpcion4.apply {
-            if (textos.size > 2) text = textos[3]
+            text = textos.getOrNull(3) ?: ""
             isVisible = visible
-            isChecked = false
         }
 
     }
@@ -149,40 +168,27 @@ class MainActivity : AppCompatActivity() {
      */
     private fun checkAnswer() {
         val preguntaA = preguntasRepository.getPreguntaByIndex(iActual)
-        when (preguntaA) {
-            is PreguntaTest -> {
-                // El id de la opción seleccionada
-                val seleccionada = binding.rgOpciones.checkedRadioButtonId
-                if (seleccionada == -1) {
-                    Toast.makeText(this, "No has seleccionado ninguna opción", Toast.LENGTH_LONG)
-                        .show()
-                } else {
-                    val seleccionadaIndex =
-                        binding.rgOpciones.indexOfChild(findViewById(seleccionada))
-                    if (seleccionadaIndex == preguntaA.getCorrectIndex()) {
-                        Toast.makeText(this, "¡Correcto!", Toast.LENGTH_LONG).show()
-                    } else {
-                        Toast.makeText(this, "¡Incorrecto!", Toast.LENGTH_LONG).show()
-                    }
-                }
-            }
+        if (preguntaA != null) {
+            // El id de la opción seleccionada
+            val seleccionada = binding.rgOpciones.checkedRadioButtonId
+            if (seleccionada == -1) {
+                Toast.makeText(this, "No has seleccionado ninguna opción", Toast.LENGTH_LONG)
+                    .show()
+            } else {
+                val seleccionadaIndex =
+                    binding.rgOpciones.indexOfChild(findViewById(seleccionada))
+                val correcta = seleccionadaIndex == preguntaA.getCorrectIndex()
+                resultadosRepository.addResultado(Resultado(preguntaA, correcta))
 
-            is PreguntaVerdaderoFalso -> {
-                val seleccionada = binding.rgOpciones.checkedRadioButtonId
-                if (seleccionada == -1) {
-                    Toast.makeText(this, "No has seleccionado ninguna opción", Toast.LENGTH_LONG)
-                        .show()
-                } else {
-                    val seleccionadaIndex =
-                        binding.rgOpciones.indexOfChild(findViewById(seleccionada))
-                    Toast.makeText(
-                        this,
-                        if (seleccionadaIndex == preguntaA.getCorrectIndex()) "¡Correcto!"
-                        else "¡Incorrecto!", Toast.LENGTH_LONG
-                    ).show()
-                }
+                Toast.makeText(
+                    this,
+                    if (correcta) "¡Correcto!" else "¡Incorrecto!",
+                    Toast.LENGTH_LONG
+                ).show()
+
             }
         }
+
     }
 
 }

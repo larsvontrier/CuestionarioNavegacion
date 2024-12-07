@@ -5,7 +5,7 @@
     <string name="answer2">Todas las clases son selladas</string>
     <string name="answer3">Todas las clases son finales</string>
     <string name="answer4">Todas las clases son protegidas</string>
-    <string name="comprobar">Comprobar</string>
+    <string name="comprobar">Guardar</string>
     <string name="limpiar">Limpiar</string>
     <string name="okMensaje">Respuesta correcta</string>
     <string name="errorMensaje">Respuesta incorrecta</string>
@@ -13,4 +13,10 @@
     <string name="noQuestion">-</string>
     <string name="formatoEnunciado"> %d - %s</string>
     <string name="txtNext">Siguiente</string>
+    <string name="txtEnviar">Enviar</string>
+    <string name="envio_correo_resultados">Envío de correo con los resultados</string>
+    <string name="boton_siguiente">Botón de siguiente</string>
+    <string name="boton_enviar">Botón de enviar</string>
+    <string name="reintentar">Reintentar</string>
+    <string name="numero_intentos">Número de intentos: %d</string>
 </resources>

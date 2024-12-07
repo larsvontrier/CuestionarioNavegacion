@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "CicloDeVida"
+rootProject.name = "CuestionarioResultado"
 include(":app")
  

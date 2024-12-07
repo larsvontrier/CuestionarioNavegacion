@@ -4,83 +4,118 @@
     android:id="@+id/principal"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/tvPregunta"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="24dp"
-        android:gravity="center"
-        tools:text="@string/question"
-        android:textSize="24sp" />
-
-    <RadioGroup
-        android:id="@+id/rgOpciones"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp"
-        android:orientation="vertical">
-
-        <RadioButton
-            android:id="@+id/rbOpcion1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="@string/answer1" />
-
-        <RadioButton
-            android:id="@+id/rbOpcion2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="@string/answer2" />
-
-        <RadioButton
-            android:id="@+id/rbOpcion3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="@string/answer3" />
-
-        <RadioButton
-            android:id="@+id/rbOpcion4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="@string/answer4" />
-
-    </RadioGroup>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
 
-        <Button
+        <TextView
+            android:id="@+id/tvPregunta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10sp"
-            android:text="@string/limpiar"
-            android:id="@+id/btLimpar"/>
+            android:gravity="center"
+            android:padding="24dp"
+            android:textSize="24sp"
+            tools:text="@string/question" />
 
-        <Button
+        <RadioGroup
+            android:id="@+id/rgOpciones"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10sp"
-            android:text="@string/comprobar"
-            android:id="@+id/btComprobar"/>
+            android:layout_margin="30dp"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/rbOpcion1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="@string/answer1" />
+
+            <RadioButton
+                android:id="@+id/rbOpcion2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="@string/answer2" />
+
+            <RadioButton
+                android:id="@+id/rbOpcion3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="@string/answer3" />
+
+            <RadioButton
+                android:id="@+id/rbOpcion4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="@string/answer4" />
+
+        </RadioGroup>
+
+        <LinearLayout
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btLimpar"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/limpiar" />
+
+            <Button
+                android:id="@+id/btComprobar"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/comprobar" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnNext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:drawableEnd="@drawable/ic_next"
+                android:contentDescription="@string/boton_siguiente"
+                android:drawablePadding="4dp"
+                android:gravity="center"
+                android:text="@string/txtNext" />
+
+            <Button
+                android:id="@+id/btEnviar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:contentDescription="@string/boton_enviar"
+                android:drawablePadding="4dp"
+                android:gravity="center"
+                android:drawableEnd="@drawable/ic_send"
+                android:text="@string/txtEnviar"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvIntentos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            tools:text="Numero de intentos: 0" />
+
     </LinearLayout>
-
-    <Button
-        android:id="@+id/btnNext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/txtNext"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:gravity="center" />
-
-</LinearLayout>
 </ScrollView>
