@@ -7,6 +7,7 @@ Emplea las siguientes tecnologías:
 - viewBinding
 - Layouts: `ConstraintLayout`, `LinearLayout`, `ScrollView`
 - Views: `TextView`, `ImageView`, `Button`, `EditText`, `RadioButton`, `RadioGroup`, `ListView` (Legacy/Desaconsejado), `FloatingActionButton`
+- Se han añadido imágenes a botones: `drawableLeft`, `drawableRight`, `drawableTop`, `drawableBottom`
 - Recursos de cadenas (`strings.xml`)
 - Modelo de datos de preguntas: se ha añadido `Resultado` para mantener las respuestas del usuario: `ResultadoRepository`
 - **Repositorio de preguntas** (a mano), `PreguntaRepository`, que debe sustituirse por un repositorio de preguntas de una base de datos o una API. Se implanta como `object` para mantener las preguntas, pero debería ser un repositorio de preguntas real.
