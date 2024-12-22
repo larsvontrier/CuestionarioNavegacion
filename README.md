@@ -1,5 +1,7 @@
 ## Cuestionarios con Navegación entre Actividades
 
+[//]: # (https://github.com/larsvontrier/CuestionarioNavegacion)
+
 Este proyecto es un ejemplo de navegación dentro de una actividad para trabajar con cuestionarios e invoca a a una segunda actividad para mostrar el resultado.
 
 Emplea las siguientes tecnologías:
