@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Cuestionarios</string>
+    <string name="app_name">Cuestionarios StartActivity</string>
     <string name="question">¿Cuál es el comportamiento por defecto de las clases en Kotlin?</string>
     <string name="answer1">Todas las clases son privadas</string>
     <string name="answer2">Todas las clases son selladas</string>
